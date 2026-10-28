@@ -11,7 +11,6 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiElevRouteImport } from './routes/api/elev'
-import { Route as ApiRustmapsImageRouteImport } from './routes/api/rustmaps/image'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -23,40 +22,31 @@ const ApiElevRoute = ApiElevRouteImport.update({
   path: '/api/elev',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiRustmapsImageRoute = ApiRustmapsImageRouteImport.update({
-  id: '/api/rustmaps/image',
-  path: '/api/rustmaps/image',
-  getParentRoute: () => rootRouteImport,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/api/elev': typeof ApiElevRoute
-  '/api/rustmaps/image': typeof ApiRustmapsImageRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/api/elev': typeof ApiElevRoute
-  '/api/rustmaps/image': typeof ApiRustmapsImageRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/api/elev': typeof ApiElevRoute
-  '/api/rustmaps/image': typeof ApiRustmapsImageRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/api/elev' | '/api/rustmaps/image'
+  fullPaths: '/' | '/api/elev'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/api/elev' | '/api/rustmaps/image'
-  id: '__root__' | '/' | '/api/elev' | '/api/rustmaps/image'
+  to: '/' | '/api/elev'
+  id: '__root__' | '/' | '/api/elev'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ApiElevRoute: typeof ApiElevRoute
-  ApiRustmapsImageRoute: typeof ApiRustmapsImageRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -75,20 +65,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiElevRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/rustmaps/image': {
-      id: '/api/rustmaps/image'
-      path: '/api/rustmaps/image'
-      fullPath: '/api/rustmaps/image'
-      preLoaderRoute: typeof ApiRustmapsImageRouteImport
-      parentRoute: typeof rootRouteImport
-    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ApiElevRoute: ApiElevRoute,
-  ApiRustmapsImageRoute: ApiRustmapsImageRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
